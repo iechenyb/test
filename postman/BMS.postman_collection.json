@@ -1,0 +1,1260 @@
+{
+	"info": {
+		"_postman_id": "55e317f7-6b1e-466b-86be-fb72a9987561",
+		"name": "BMS",
+		"description": "bms",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "测试用例1",
+			"item": [
+				{
+					"name": "add登录",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a5ae5386-07f7-4985-bbae-74da13799958",
+								"exec": [
+									"pm.test(\"登录测试\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(pm.response.text()).to.include(\"欢迎\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/user/login?username=add&password=111111",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "add"
+								},
+								{
+									"key": "password",
+									"value": "111111"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "增加测试菜单",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "800dda88-42ef-4f07-903a-a9725e9fff98",
+								"exec": [
+									"pm.test(\"菜单插入测试\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.ec).to.eql(\"1\");",
+									"    pm.expect(jsonData.es).to.eql(\"菜单插入成功!\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"isLeaf\": 0,\n  \"menuDesc\": \"{{url}}\",\n  \"menuName\": \"{{url}}\",\n  \"ordor\": 0,\n  \"parentId\": -1,\n  \"url\": \"{{url}}\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/menu/add",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"menu",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询测试菜单",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ab2e60ad-0c67-4ef4-a75e-2de6269ce5c1",
+								"exec": [
+									"pm.test(\"菜单查询测试\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.ec).to.eql(\"0\");",
+									"    pm.expect(jsonData.d.length).to.eql(1);",
+									"    pm.environment.set(\"menuId\", jsonData.d[0].id);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"isLeaf\": 0,\n  \"menuDesc\": \"{{url}}\",\n  \"menuName\": \"{{url}}\",\n  \"ordor\": 0,\n  \"parentId\": -1,\n  \"url\": \"{{url}}\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/menu/list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"menu",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新菜单信息",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "04176ae1-54da-42aa-b191-97116df033da",
+								"exec": [
+									"pm.test(\"菜单查询测试\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.ec).to.eql(\"0\");",
+									"    pm.expect(jsonData.es).to.eql(\"更新成功！更新记录数1\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"isLeaf\": 0,\n  \"menuDesc\": \"{{url}}updata\",\n  \"menuName\": \"{{url}}\",\n  \"ordor\": 0,\n  \"parentId\": -1,\n  \"url\": \"{{url}}\",\n  \"id\":\"{{menuId}}\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/menu/update",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"menu",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询更新菜单",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ab2e60ad-0c67-4ef4-a75e-2de6269ce5c1",
+								"exec": [
+									"pm.test(\"查询更新菜单测试\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.ec).to.eql(\"0\");",
+									"    pm.expect(jsonData.d.length).to.eql(1);",
+									"    pm.environment.set(\"menuId\", jsonData.d[0].id);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"menuDesc\": \"{{url}}updata\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/menu/list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"menu",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询全菜单",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/menu/getSystemMenuTree",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"menu",
+								"getSystemMenuTree"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除测试菜单",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "efd835b4-bbd1-41dc-9ec4-0f64a7b30286",
+								"exec": [
+									"pm.test(\"菜单查询测试\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.ec).to.eql(\"0\");",
+									"    pm.expect(jsonData.d).to.eql(\"删除1记录！\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/menu/deleteById?id={{menuId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"menu",
+								"deleteById"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{menuId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "登出",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b93e9e77-f50d-4a51-8cf6-e4ec10c9c669",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/user/logout",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "menu",
+			"item": [
+				{
+					"name": "getUserSystemMenuTree",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/menu/getUserSystemMenuTree?userId={{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"menu",
+								"getUserSystemMenuTree"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{userId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Folder for menu"
+		},
+		{
+			"name": "role",
+			"item": [
+				{
+					"name": "新增角色信息",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "role"
+						},
+						"url": {
+							"raw": "{{url}}/role/add",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "根据主键删除角色信息",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/role/deleteById?id={{id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"deleteById"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "角色列表信息",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "role"
+						},
+						"url": {
+							"raw": "{{url}}/role/list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新角色信息",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "role"
+						},
+						"url": {
+							"raw": "{{url}}/role/update",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Folder for role"
+		},
+		{
+			"name": "rolemenu",
+			"item": [
+				{
+					"name": "角色菜单信息新增",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "rmenu"
+						},
+						"url": {
+							"raw": "{{url}}/rolemenu/add",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rolemenu",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "根据主键删除菜单",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/rolemenu/deleteById?id={{id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rolemenu",
+								"deleteById"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAssignedRoleMenu",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/rolemenu/getRoleMenu?roleId={{roleId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rolemenu",
+								"getRoleMenu"
+							],
+							"query": [
+								{
+									"key": "roleId",
+									"value": "{{roleId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "菜单信息查询",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "rmenu"
+						},
+						"url": {
+							"raw": "{{url}}/rolemenu/list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rolemenu",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "预留方法，暂时未开发。",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/rolemenu/saveRoleMenu?leafIds[]={{leafIds[]}}&roleId={{roleId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rolemenu",
+								"saveRoleMenu"
+							],
+							"query": [
+								{
+									"key": "leafIds[]",
+									"value": "{{leafIds[]}}"
+								},
+								{
+									"key": "roleId",
+									"value": "{{roleId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "批量保存角色菜单信息",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/rolemenu/saveRoleMenuBatch?menuIds[]={{menuIds[]}}&roleId={{roleId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rolemenu",
+								"saveRoleMenuBatch"
+							],
+							"query": [
+								{
+									"key": "menuIds[]",
+									"value": "{{menuIds[]}}"
+								},
+								{
+									"key": "roleId",
+									"value": "{{roleId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新菜单信息",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "menu"
+						},
+						"url": {
+							"raw": "{{url}}/rolemenu/update",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rolemenu",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Folder for rolemenu"
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "新增用户信息",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "user"
+						},
+						"url": {
+							"raw": "{{url}}/user/add",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "根据主键删除用户信息",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/user/deleteById?id={{id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"deleteById"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "模拟生成用户信息，仅供测试使用",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "生成用户数量"
+						},
+						"url": {
+							"raw": "{{url}}/user/genUsers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"genUsers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取用户的角色信息",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/user/getUserRoles?userId={{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"getUserRoles"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{userId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getInfor",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/user/infor",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"infor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户列表",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "user"
+						},
+						"url": {
+							"raw": "{{url}}/user/list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户列表分页查询",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/user/listPage?id={{id}}&userName={{userName}}&empNo={{empNo}}&idCard={{idCard}}&email={{email}}&phone={{phone}}&password={{password}}&lastLoginTime={{lastLoginTime}}&lastLoginIp={{lastLoginIp}}&loginIp={{loginIp}}&loginSum={{loginSum}}&isEffect={{isEffect}}&sex={{sex}}&operateID={{operateID}}&pageNum={{pageNum}}&pageSize={{pageSize}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"listPage"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{id}}"
+								},
+								{
+									"key": "userName",
+									"value": "{{userName}}"
+								},
+								{
+									"key": "empNo",
+									"value": "{{empNo}}"
+								},
+								{
+									"key": "idCard",
+									"value": "{{idCard}}"
+								},
+								{
+									"key": "email",
+									"value": "{{email}}"
+								},
+								{
+									"key": "phone",
+									"value": "{{phone}}"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}"
+								},
+								{
+									"key": "lastLoginTime",
+									"value": "{{lastLoginTime}}"
+								},
+								{
+									"key": "lastLoginIp",
+									"value": "{{lastLoginIp}}"
+								},
+								{
+									"key": "loginIp",
+									"value": "{{loginIp}}"
+								},
+								{
+									"key": "loginSum",
+									"value": "{{loginSum}}"
+								},
+								{
+									"key": "isEffect",
+									"value": "{{isEffect}}"
+								},
+								{
+									"key": "sex",
+									"value": "{{sex}}"
+								},
+								{
+									"key": "operateID",
+									"value": "{{operateID}}"
+								},
+								{
+									"key": "pageNum",
+									"value": "{{pageNum}}"
+								},
+								{
+									"key": "pageSize",
+									"value": "{{pageSize}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "保存用户角色",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/user/saveUserRole?roleIds[]={{roleIds[]}}&userId={{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"saveUserRole"
+							],
+							"query": [
+								{
+									"key": "roleIds[]",
+									"value": "{{roleIds[]}}"
+								},
+								{
+									"key": "userId",
+									"value": "{{userId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "toLogin",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/user/toLogin",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"toLogin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新用户信息",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "user"
+						},
+						"url": {
+							"raw": "{{url}}/user/update",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Folder for user"
+		},
+		{
+			"name": "logout",
+			"item": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "1d80e74f-247a-443b-84ae-8387d1f9cab7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "548f51fd-5b69-4590-a18c-3546e40fcf0f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
